@@ -1,8 +1,20 @@
 package com.edusantanaw.crud.auth.DTO;
 
-import org.springframework.stereotype.Service;
+import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@AllArgsConstructor
+@Data
+@Builder
+@NoArgsConstructor
 public class SigninDTO {
-    public String email;
-    public String password;
+    @NotBlank
+    @Email
+    private String email;
+    @NotBlank
+    @Size(max = 15, min = 5)
+    private String password;
 }
