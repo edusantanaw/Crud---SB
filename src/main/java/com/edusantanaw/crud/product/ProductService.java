@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -32,5 +33,10 @@ public class ProductService {
     public Page<Product> load(Pageable page){
         var prods = repository.findAll(page);
         return prods;
+    }
+
+    public Product loadById(UUID id){
+        var prod = repository.findById(id).orElseThrow(() -> new Error("Product not found!"));
+        return  prod;
     }
 }

@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping(path="/api/product")
 @RequiredArgsConstructor
@@ -18,7 +20,7 @@ public class ProductController {
 
     private final ProductService productService;
 
-    @PostMapping("")
+    @PostMapping
     public ResponseEntity<ProductReponse> create(@RequestBody CreateProductDTO data){
         var prod = productService.create(data);
         return new ResponseEntity(prod, HttpStatus.CREATED);
@@ -28,6 +30,16 @@ public class ProductController {
     public  ResponseEntity<Page<Product>> loadProducts(Pageable page){
        Page<Product> products = productService.load(page);
         return  ResponseEntity.ok(products);
+    }
+    @GetMapping
+    @RequestMapping("/{id}")
+    public ResponseEntity loadById(@RequestParam UUID id){
+      try {
+          var prod = productService.loadById(id);
+          return  ResponseEntity.ok(prod);
+      } catch (Exception e) {
+          return  new ResponseEntity(HttpStatus.NO_CONTENT);
+      }
     }
 
 }
