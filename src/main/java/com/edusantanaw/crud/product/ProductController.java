@@ -1,16 +1,33 @@
 package com.edusantanaw.crud.product;
 
 
+import com.edusantanaw.crud.product.DTO.CreateProductDTO;
+import com.edusantanaw.crud.product.entity.Product;
+import com.edusantanaw.crud.product.helpers.ProductReponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path="/api/product")
 @RequiredArgsConstructor
 public class ProductController {
 
-    public void create(){
+    private final ProductService productService;
 
+    @PostMapping("")
+    public ResponseEntity<ProductReponse> create(@RequestBody CreateProductDTO data){
+        var prod = productService.create(data);
+        return new ResponseEntity(prod, HttpStatus.CREATED);
     }
+
+    @GetMapping
+    public  ResponseEntity<Page<Product>> loadProducts(Pageable page){
+       Page<Product> products = productService.load(page);
+        return  ResponseEntity.ok(products);
+    }
+
 }
