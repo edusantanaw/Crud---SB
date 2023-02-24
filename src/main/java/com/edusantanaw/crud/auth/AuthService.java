@@ -38,19 +38,23 @@ public class AuthService {
                 .build();
     }
     public AuthResponse create(SignupDTO data){
-        var user =  User
+        User user =  buildUser(data);
+        repository.save(user);
+        var jwt = jwtService.generateToken( user);
+        return  AuthResponse.builder()
+                .token(jwt)
+                .user(user)
+                .build();
+    }
+
+    private User buildUser(SignupDTO data){
+        return User
                 .builder()
                 .firstname(data.getFirstname())
                 .lastname(data.getLastname())
                 .email(data.getEmail())
                 .password(passwordEncoder.encode(data.getPassword()))
                 .role(Roles.USER)
-                .build();
-        repository.save(user);
-        var jwt = jwtService.generateToken( user);
-        return  AuthResponse.builder()
-                .token(jwt)
-                .user(user)
                 .build();
     }
 }

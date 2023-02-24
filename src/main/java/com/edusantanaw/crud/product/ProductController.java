@@ -1,6 +1,5 @@
 package com.edusantanaw.crud.product;
 
-
 import com.edusantanaw.crud.product.DTO.CreateProductDTO;
 import com.edusantanaw.crud.product.DTO.UpdateProductDTO;
 import com.edusantanaw.crud.product.entity.Product;

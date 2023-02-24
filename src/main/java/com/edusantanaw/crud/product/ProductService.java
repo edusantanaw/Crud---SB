@@ -18,15 +18,19 @@ public class ProductService {
     private final ProductRepository repository;
 
     public ProductReponse create(CreateProductDTO data){
-        var product = Product
+        Product product = buildProduct(data);
+        repository.save(product);
+        return ProductReponse.builder().product(product).build();
+    }
+
+    private Product buildProduct(CreateProductDTO data){
+        return Product
                 .builder()
                 .name(data.getName())
                 .description(data.getDescription())
                 .price(data.getPrice())
                 .amount(data.getAmount())
                 .build();
-        repository.save(product);
-        return ProductReponse.builder().product(product).build();
     }
 
     public Page<Product> load(Pageable page){
