@@ -3,13 +3,12 @@ package com.edusantanaw.crud.auth;
 import com.edusantanaw.crud.auth.DTO.SigninDTO;
 import com.edusantanaw.crud.auth.DTO.SignupDTO;
 import com.edusantanaw.crud.config.security.JwtService;
-import com.edusantanaw.crud.config.security.UserDetailsIpl;
 import com.edusantanaw.crud.infra.UserRepository;
 import com.edusantanaw.crud.user.entity.Roles;
+import com.edusantanaw.crud.user.entity.User;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -39,7 +38,7 @@ public class AuthService {
                 .build();
     }
     public AuthResponse create(SignupDTO data){
-        var user =  UserDetailsIpl
+        var user =  User
                 .builder()
                 .firstname(data.getFirstname())
                 .lastname(data.getLastname())
@@ -48,10 +47,10 @@ public class AuthService {
                 .role(Roles.USER)
                 .build();
         repository.save(user);
-        var jwt = jwtService.generateToken((UserDetails) user);
+        var jwt = jwtService.generateToken( user);
         return  AuthResponse.builder()
                 .token(jwt)
-                .user((UserDetails) user)
+                .user(user)
                 .build();
     }
 }

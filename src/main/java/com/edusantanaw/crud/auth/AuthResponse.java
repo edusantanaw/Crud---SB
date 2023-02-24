@@ -1,7 +1,5 @@
 package com.edusantanaw.crud.auth;
 
-import com.edusantanaw.crud.config.security.UserDetailsIpl;
-import com.edusantanaw.crud.user.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
