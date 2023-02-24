@@ -2,14 +2,13 @@ package com.edusantanaw.crud.product;
 
 import com.edusantanaw.crud.infra.ProductRepository;
 import com.edusantanaw.crud.product.DTO.CreateProductDTO;
+import com.edusantanaw.crud.product.DTO.UpdateProductDTO;
 import com.edusantanaw.crud.product.entity.Product;
 import com.edusantanaw.crud.product.helpers.ProductReponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -38,5 +37,13 @@ public class ProductService {
     public Product loadById(UUID id){
         var prod = repository.findById(id).orElseThrow(() -> new Error("Product not found!"));
         return  prod;
+    }
+
+    public  Product upadteProduct(UpdateProductDTO data){
+        Product prod = repository.findById(data.getId()).orElseThrow(() ->{
+            throw  new Error("Product not exists!");
+        });
+        repository.save(prod);
+        return prod;
     }
 }

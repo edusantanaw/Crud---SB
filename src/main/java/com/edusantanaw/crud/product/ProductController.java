@@ -2,6 +2,7 @@ package com.edusantanaw.crud.product;
 
 
 import com.edusantanaw.crud.product.DTO.CreateProductDTO;
+import com.edusantanaw.crud.product.DTO.UpdateProductDTO;
 import com.edusantanaw.crud.product.entity.Product;
 import com.edusantanaw.crud.product.helpers.ProductReponse;
 import lombok.RequiredArgsConstructor;
@@ -35,11 +36,20 @@ public class ProductController {
     @RequestMapping("/{id}")
     public ResponseEntity loadById(@RequestParam UUID id){
       try {
-          var prod = productService.loadById(id);
+          Product prod = productService.loadById(id);
           return  ResponseEntity.ok(prod);
       } catch (Exception e) {
           return  new ResponseEntity(HttpStatus.NO_CONTENT);
       }
     }
+    @PutMapping
 
+    public ResponseEntity updateProduct(UpdateProductDTO data){
+        try {
+            Product updatedProduct = productService.upadteProduct(data);
+            return ResponseEntity.ok(updatedProduct);
+        }catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 }
