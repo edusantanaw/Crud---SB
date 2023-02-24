@@ -43,13 +43,23 @@ public class ProductController {
       }
     }
     @PutMapping
-
     public ResponseEntity updateProduct(UpdateProductDTO data){
         try {
             Product updatedProduct = productService.upadteProduct(data);
             return ResponseEntity.ok(updatedProduct);
         }catch (Exception e){
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @DeleteMapping
+    @RequestMapping("/{id}")
+    public ResponseEntity deleteProduct(@RequestParam UUID id){
+        try {
+            productService.removeProduct(id);
+            return ResponseEntity.ok(null);
+        }catch (Exception e){
+            return  new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 }

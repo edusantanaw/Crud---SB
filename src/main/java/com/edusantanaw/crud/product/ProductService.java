@@ -46,4 +46,11 @@ public class ProductService {
         repository.save(prod);
         return prod;
     }
+
+    public void removeProduct(UUID id){
+        repository.findById(id).orElseThrow(() ->{
+            throw  new Error("Product not exists!");
+        });
+        repository.deleteById(id);
+    }
 }
