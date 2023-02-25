@@ -1,23 +1,22 @@
 package com.edusantanaw.crud.product.DTO;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.*;
+import lombok.Data;
 
-@AllArgsConstructor
+
 @Data
-@Builder
-@NoArgsConstructor
 public class CreateProductDTO {
-    @NotBlank
+    @NotBlank(message = "Name is required!")
     @Size(min=3, max = 20)
     private  String name;
 
-    @NotBlank
+    @NotBlank(message = "Description is required!")
     @Size(min = 3, max = 250)
     private String description;
-    @NotBlank
+    @NotNull(message = "Price is required!")
     private double price;
-    @NotBlank
+    @NotNull(message = "Amount is required!")
     private int amount;
 }

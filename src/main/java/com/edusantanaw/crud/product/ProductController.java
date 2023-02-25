@@ -4,6 +4,7 @@ import com.edusantanaw.crud.product.DTO.CreateProductDTO;
 import com.edusantanaw.crud.product.DTO.UpdateProductDTO;
 import com.edusantanaw.crud.product.entity.Product;
 import com.edusantanaw.crud.product.helpers.ProductReponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,9 +22,9 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping
-    public ResponseEntity<ProductReponse> create(@RequestBody CreateProductDTO data){
+    public ResponseEntity<ProductReponse> create(@RequestBody @Valid CreateProductDTO data){
         var prod = productService.create(data);
-        return new ResponseEntity(prod, HttpStatus.CREATED);
+        return new ResponseEntity<>(prod, HttpStatus.CREATED);
     }
 
     @GetMapping
@@ -31,8 +32,7 @@ public class ProductController {
        Page<Product> products = productService.load(page);
         return  ResponseEntity.ok(products);
     }
-    @GetMapping
-    @RequestMapping("/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity loadById(@RequestParam UUID id){
       try {
           Product prod = productService.loadById(id);
@@ -42,7 +42,7 @@ public class ProductController {
       }
     }
     @PutMapping
-    public ResponseEntity updateProduct(UpdateProductDTO data){
+    public ResponseEntity updateProduct(@RequestBody @Valid  UpdateProductDTO data){
         try {
             Product updatedProduct = productService.upadteProduct(data);
             return ResponseEntity.ok(updatedProduct);
